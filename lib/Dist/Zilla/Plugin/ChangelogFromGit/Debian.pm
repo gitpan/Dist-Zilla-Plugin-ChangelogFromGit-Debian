@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::ChangelogFromGit::Debian;
 {
-  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.01';
+  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.02';
 }
 use Moose;
 
@@ -39,7 +39,7 @@ sub render_changelog {
 	        unless ($change->description =~ /^\s/) {
                 $changelog .= fill("    ", "    ", $change->description)."\n\n";
             }
-            $changelog .= ' -- '.$change->author_name.' <'.$change->author_email.'>  '.$change->date."\n\n";
+            $changelog .= ' -- '.$change->author_name.' <'.$change->author_email.'>  '.DateTime::Format::Mail->format_datetime($change->date)."\n\n";
 
 	    }
 	}
@@ -60,7 +60,7 @@ Dist::Zilla::Plugin::ChangelogFromGit::Debian - Debian formatter for Changelogs
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
