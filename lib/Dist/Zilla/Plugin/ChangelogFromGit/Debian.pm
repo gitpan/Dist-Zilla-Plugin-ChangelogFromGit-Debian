@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::ChangelogFromGit::Debian;
 {
-  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.02';
+  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.03';
 }
 use Moose;
 
@@ -10,6 +10,12 @@ extends 'Dist::Zilla::Plugin::ChangelogFromGit';
 
 use DateTime::Format::Mail;
 use Text::Wrap qw(wrap fill $columns $huge);
+
+has 'package_name' => (
+    is => 'rw',
+    isa => 'Str',
+    required => 1
+);
 
 sub render_changelog {
     my ($self) = @_;
@@ -29,7 +35,7 @@ sub render_changelog {
             $version = $self->zilla->version;
         }
 
-		my $tag_line = $self->zilla->name.' ('.$version.') stable; urgency=low';
+		my $tag_line = $self->package_name.' ('.$version.') stable; urgency=low';
 		$changelog .= (
 			"$tag_line\n"
 		);
@@ -60,7 +66,7 @@ Dist::Zilla::Plugin::ChangelogFromGit::Debian - Debian formatter for Changelogs
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 SYNOPSIS
 
@@ -69,6 +75,7 @@ version 0.02
     tag_regexp = ^\d+\.\d+$
     file_name = debian/changelog
     wrap_column = 72
+    package_name = my-package # required!!
 
 =head1 DESCRIPTION
 
