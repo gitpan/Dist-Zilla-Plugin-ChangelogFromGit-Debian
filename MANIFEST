@@ -1,3 +1,4 @@
+Changes
 LICENSE
 MANIFEST
 META.json
@@ -7,4 +8,4 @@ README
 README.mkdn
 lib/Dist/Zilla/Plugin/ChangelogFromGit/Debian.pm
 t/release-pod-syntax.t
-weaver.ini
+t/release-synopsis.t

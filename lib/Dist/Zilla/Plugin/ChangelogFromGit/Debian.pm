@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::ChangelogFromGit::Debian;
 {
-  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.03';
+  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.04';
 }
 use Moose;
 
@@ -10,6 +10,12 @@ extends 'Dist::Zilla::Plugin::ChangelogFromGit';
 
 use DateTime::Format::Mail;
 use Text::Wrap qw(wrap fill $columns $huge);
+
+has 'dist_name' => (
+    is => 'rw',
+    isa => 'Str',
+    default => 'stable'
+);
 
 has 'package_name' => (
     is => 'rw',
@@ -35,7 +41,7 @@ sub render_changelog {
             $version = $self->zilla->version;
         }
 
-		my $tag_line = $self->package_name.' ('.$version.') stable; urgency=low';
+		my $tag_line = $self->package_name.' ('.$version.') '.$self->dist_name.'; urgency=low';
 		$changelog .= (
 			"$tag_line\n"
 		);
@@ -66,16 +72,17 @@ Dist::Zilla::Plugin::ChangelogFromGit::Debian - Debian formatter for Changelogs
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
-    [ChangelogFromGit::Debian]
-    max_age = 365
-    tag_regexp = ^\d+\.\d+$
-    file_name = debian/changelog
-    wrap_column = 72
-    package_name = my-package # required!!
+    #    [ChangelogFromGit::Debian]
+    #    max_age = 365
+    #    tag_regexp = ^\d+\.\d+$
+    #    file_name = debian/changelog
+    #    wrap_column = 72
+    #    dist_name = squeeze # defaults to stable
+    #    package_name = my-package # required!!
 
 =head1 DESCRIPTION
 
