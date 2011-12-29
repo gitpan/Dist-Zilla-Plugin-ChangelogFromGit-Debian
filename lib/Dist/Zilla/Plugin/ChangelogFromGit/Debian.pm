@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::ChangelogFromGit::Debian;
 {
-  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.04';
+  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.05';
 }
 use Moose;
 
@@ -11,16 +11,22 @@ extends 'Dist::Zilla::Plugin::ChangelogFromGit';
 use DateTime::Format::Mail;
 use Text::Wrap qw(wrap fill $columns $huge);
 
+
 has 'dist_name' => (
     is => 'rw',
     isa => 'Str',
     default => 'stable'
 );
 
+
 has 'package_name' => (
     is => 'rw',
     isa => 'Str',
-    required => 1
+    lazy => 1,
+    default => sub {
+        my $self = shift;
+        return lc($self->zilla->name)
+    }
 );
 
 sub render_changelog {
@@ -72,7 +78,7 @@ Dist::Zilla::Plugin::ChangelogFromGit::Debian - Debian formatter for Changelogs
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 
@@ -82,13 +88,23 @@ version 0.04
     #    file_name = debian/changelog
     #    wrap_column = 72
     #    dist_name = squeeze # defaults to stable
-    #    package_name = my-package # required!!
+    #    package_name = my-package # defaults to lc($self->zilla->name)
 
 =head1 DESCRIPTION
 
 Dist::Zilla::Plugin::ChangelogFromGit::Debian extends
 L<Dist::Zilla::Plugin::ChangelogFromGit> to create changelogs acceptable
 for Debian packages.
+
+=head1 ATTRIBUTES
+
+=head2 dist_name
+
+The distribution name for this package.
+
+=head2 package_name
+
+The package name for this package.
 
 =head1 AUTHOR
 
