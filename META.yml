@@ -21,4 +21,4 @@ requires:
 resources:
   homepage: https://github.com/gphat/dist-zilla-plugin-changelogfromgit-debian
   repository: https://github.com/gphat/dist-zilla-plugin-changelogfromgit-debian.git
-version: 0.06
+version: 0.07
