@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::ChangelogFromGit::Debian;
 {
-  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.07';
+  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.08';
 }
 use Moose;
 
@@ -10,6 +10,13 @@ extends 'Dist::Zilla::Plugin::ChangelogFromGit';
 
 use DateTime::Format::Mail;
 use Text::Wrap qw(wrap fill $columns $huge);
+
+
+has 'allow_empty_head' => (
+    is => 'rw',
+    isa => 'Bool',
+    default => 1
+);
 
 
 has 'dist_name' => (
@@ -53,8 +60,11 @@ sub render_changelog {
 	
 	foreach my $release (reverse $self->all_releases) {
 
-        # Don't output empty versions.
-        next if $release->has_no_changes;
+        # Don't output empty versions, unless it's HEAD cuz that might matter!
+        next if $release->has_no_changes && $release->version ne 'HEAD';
+        if($release->version eq 'HEAD') {
+            next unless $self->allow_empty_head;
+        }
 
         my $version = $release->version;
         if($version eq 'HEAD') {
@@ -75,6 +85,12 @@ sub render_changelog {
                 $changelog .= fill("  ", "    ", '* '.$change->description)."\n";
             }
 	    }
+	    if($release->has_no_changes) {
+            $firstchange = Software::Release::Change->new(
+                description => 'no changes',
+                date => DateTime->now
+            );
+        }
         $changelog .= "\n -- ".$self->maintainer_name.' <'.$self->maintainer_email.'>  '.DateTime::Format::Mail->format_datetime($firstchange->date)."\n\n";
 	}
 	
@@ -94,7 +110,7 @@ Dist::Zilla::Plugin::ChangelogFromGit::Debian - Debian formatter for Changelogs
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
@@ -113,6 +129,11 @@ L<Dist::Zilla::Plugin::ChangelogFromGit> to create changelogs acceptable
 for Debian packages.
 
 =head1 ATTRIBUTES
+
+=head2 allow_empty_head
+
+If true then an empty head is allowed. Since this module converts head to
+the current dzil version, this might be useful to you for some reason.
 
 =head2 dist_name
 

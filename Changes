@@ -1,5 +1,10 @@
 Revision history for Dist-Zilla-Plugin-ChangelogFromGit-Debian
 
+0.08 Feb 14 2012
+    - Add allow_empty_head option to allow HEAD versions with no changes
+      to be entered into the changelog. This is a selfish feature that I
+      need for something I'm doing. Yay me!
+
 0.07 Feb 8 2012
     - Add maintainer email and name as Debian doesn't like multiple folks
       being attributed. This should clean up a lot of warnings in debuild's
