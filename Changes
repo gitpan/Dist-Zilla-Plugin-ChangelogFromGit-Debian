@@ -1,5 +1,8 @@
 Revision history for Dist-Zilla-Plugin-ChangelogFromGit-Debian
 
+0.09 Apr 6 2013
+    - Documentation improvements (Sergei Svistunov)
+
 0.08 Feb 14 2012
     - Add allow_empty_head option to allow HEAD versions with no changes
       to be entered into the changelog. This is a selfish feature that I

@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::ChangelogFromGit::Debian;
 {
-  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.08';
+  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.09';
 }
 use Moose;
 
@@ -29,14 +29,14 @@ has 'dist_name' => (
 has 'maintainer_email' => (
     is => 'rw',
     isa => 'Str',
-    default => 'cpan@example.com'
+    default => defined($ENV{'DEBEMAIL'}) ? $ENV{'DEBEMAIL'} : 'cpan@example.com'
 );
 
 
 has 'maintainer_name' => (
     is => 'rw',
     isa => 'Str',
-    default => 'CPAN Author'
+    default => defined($ENV{'DEBFULLNAME'}) ? $ENV{'DEBFULLNAME'} : 'CPAN Author'
 );
 
 
@@ -101,7 +101,9 @@ sub render_changelog {
 __PACKAGE__->meta->make_immutable;
 no Moose;
 1;
+
 __END__
+
 =pod
 
 =head1 NAME
@@ -110,7 +112,7 @@ Dist::Zilla::Plugin::ChangelogFromGit::Debian - Debian formatter for Changelogs
 
 =head1 VERSION
 
-version 0.08
+version 0.09
 
 =head1 SYNOPSIS
 
@@ -135,17 +137,25 @@ for Debian packages.
 If true then an empty head is allowed. Since this module converts head to
 the current dzil version, this might be useful to you for some reason.
 
+Default value: TRUE.
+
 =head2 dist_name
 
 The distribution name for this package.
+
+Default value: 'stable'.
 
 =head2 maintainer_email
 
 The maintainer email for this package.
 
+Default value: $ENV{'DEBEMAIL'} // 'cpan@example.com'.
+
 =head2 maintainer_name
 
 The maintainer name for this package.
+
+Default value: $ENV{'DEBFULLNAME'} // 'CPAN Author'.
 
 =head2 package_name
 
@@ -157,10 +167,9 @@ Cory G Watson <gphat@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Infinity Interactive, Inc.
+This software is copyright (c) 2013 by Infinity Interactive, Inc.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

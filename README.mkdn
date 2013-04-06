@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::ChangelogFromGit::Debian - Debian formatter for Changelogs
 
 # VERSION
 
-version 0.08
+version 0.09
 
 # SYNOPSIS
 
@@ -24,24 +24,32 @@ for Debian packages.
 
 # ATTRIBUTES
 
-## allow_empty_head
+## allow\_empty\_head
 
 If true then an empty head is allowed. Since this module converts head to
 the current dzil version, this might be useful to you for some reason.
 
-## dist_name
+Default value: TRUE.
+
+## dist\_name
 
 The distribution name for this package.
 
-## maintainer_email
+Default value: 'stable'.
+
+## maintainer\_email
 
 The maintainer email for this package.
 
-## maintainer_name
+Default value: $ENV{'DEBEMAIL'} // 'cpan@example.com'.
+
+## maintainer\_name
 
 The maintainer name for this package.
 
-## package_name
+Default value: $ENV{'DEBFULLNAME'} // 'CPAN Author'.
+
+## package\_name
 
 The package name for this package.
 
@@ -51,7 +59,7 @@ Cory G Watson <gphat@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Infinity Interactive, Inc.
+This software is copyright (c) 2013 by Infinity Interactive, Inc.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

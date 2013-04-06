@@ -2,12 +2,11 @@
 abstract: 'Debian formatter for Changelogs'
 author:
   - 'Cory G Watson <gphat@cpan.org>'
-build_requires:
-  Test::More: 0
+build_requires: {}
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300006, CPAN::Meta::Converter version 2.113640'
+generated_by: 'Dist::Zilla version 4.300030, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -19,6 +18,7 @@ requires:
   Moose: 0
   Text::Wrap: 0
 resources:
+  bugtracker: https://github.com/gphat/dist-zilla-plugin-changelogfromgit-debian/issues
   homepage: https://github.com/gphat/dist-zilla-plugin-changelogfromgit-debian
   repository: https://github.com/gphat/dist-zilla-plugin-changelogfromgit-debian.git
-version: 0.08
+version: 0.09
