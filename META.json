@@ -4,7 +4,7 @@
       "Cory G Watson <gphat@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300030, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 5.012, CPAN::Meta::Converter version 2.133380",
    "license" : [
       "perl_5"
    ],
@@ -45,6 +45,6 @@
          "web" : "https://github.com/gphat/dist-zilla-plugin-changelogfromgit-debian"
       }
    },
-   "version" : "0.09"
+   "version" : "0.10"
 }
 

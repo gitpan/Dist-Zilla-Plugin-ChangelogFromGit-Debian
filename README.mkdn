@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::ChangelogFromGit::Debian - Debian formatter for Changelogs
 
 # VERSION
 
-version 0.09
+version 0.10
 
 # SYNOPSIS
 
@@ -19,8 +19,14 @@ version 0.09
 # DESCRIPTION
 
 Dist::Zilla::Plugin::ChangelogFromGit::Debian extends
-[Dist::Zilla::Plugin::ChangelogFromGit](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::ChangelogFromGit) to create changelogs acceptable
+[Dist::Zilla::Plugin::ChangelogFromGit](https://metacpan.org/pod/Dist::Zilla::Plugin::ChangelogFromGit) to create changelogs acceptable
 for Debian packages.
+
+## \_build\_id
+
+Build identifier for this package.
+
+Default value: $ENV{'BUILD\_ID'} // 0.
 
 # ATTRIBUTES
 
@@ -59,7 +65,7 @@ Cory G Watson <gphat@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Infinity Interactive, Inc.
+This software is copyright (c) 2014 by Infinity Interactive, Inc.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

@@ -1,7 +1,5 @@
 package Dist::Zilla::Plugin::ChangelogFromGit::Debian;
-{
-  $Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.09';
-}
+$Dist::Zilla::Plugin::ChangelogFromGit::Debian::VERSION = '0.10';
 use Moose;
 
 # ABSTRACT: Debian formatter for Changelogs
@@ -50,6 +48,23 @@ has 'package_name' => (
     }
 );
 
+
+has _build_id => (
+	is      => 'ro',
+	isa     => 'Str',
+	lazy    => 1,
+	builder => '_build__build_id',
+);
+
+sub _build__build_id {
+	my $self = shift;
+
+	my $build = ( defined $ENV{BUILD_ID} ) ? $ENV{BUILD_ID} : 0;
+	die "Invalid build identifier used" unless $build =~ m/^[a-zA-Z0-9]+$/;
+
+	return $build;
+}
+
 sub render_changelog {
     my ($self) = @_;
 
@@ -69,7 +84,12 @@ sub render_changelog {
         my $version = $release->version;
         if($version eq 'HEAD') {
             $version = $self->zilla->version;
+        } else {
+            my $tag_regexp = $self->tag_regexp();
+            $version =~ s/$tag_regexp/$1/;
         }
+
+		$version .= '.' . $self->_build_id if $self->_build_id;
 
 		my $tag_line = $self->package_name.' ('.$version.') '.$self->dist_name.'; urgency=low';
 		$changelog .= (
@@ -112,7 +132,7 @@ Dist::Zilla::Plugin::ChangelogFromGit::Debian - Debian formatter for Changelogs
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 SYNOPSIS
 
@@ -129,6 +149,12 @@ version 0.09
 Dist::Zilla::Plugin::ChangelogFromGit::Debian extends
 L<Dist::Zilla::Plugin::ChangelogFromGit> to create changelogs acceptable
 for Debian packages.
+
+=head2 _build_id
+
+Build identifier for this package.
+
+Default value: $ENV{'BUILD_ID'} // 0.
 
 =head1 ATTRIBUTES
 
@@ -167,7 +193,7 @@ Cory G Watson <gphat@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Infinity Interactive, Inc.
+This software is copyright (c) 2014 by Infinity Interactive, Inc.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
